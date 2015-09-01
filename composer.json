@@ -9,7 +9,7 @@
     "homepage": "https://github.com/developer-devPHP/zf2-phinx-module",
     "authors": [
         {
-            "name": "Developer",
+            "name": "Developer"
         }
     ],
     "autoload": {
