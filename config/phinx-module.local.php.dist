@@ -1,0 +1,17 @@
+<?php
+return array(
+ 'phinx-module' => Array(
+        'phinx-env' => 'prod',
+        'phinx-config' => getcwd() . '/config/phinx.yml',
+        'phinx-name'=> 'Phinx core for Microbiz',
+        'prod-db-clients-lsit' => array(
+            'charset' => 'utf8',
+            'database' => 'test_clients',
+            'driver' => 'PDO_Mysql',
+            'hostname' => '127.0.0.1',
+            'port' => '3306',
+            'username' => 'root',
+            'password' => 'root',
+        ),
+    ),
+ );

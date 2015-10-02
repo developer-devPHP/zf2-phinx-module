@@ -32,7 +32,8 @@ class ConsoleController extends AbstractActionController
          * Enforce valid console request
          */
         $request = $this->getRequest();
-        if (!$request instanceof ConsoleRequest) {
+        if (!$request instanceof ConsoleRequest)
+        {
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
@@ -54,14 +55,34 @@ class ConsoleController extends AbstractActionController
          * Enforce valid console request
          */
         $request = $this->getRequest();
-        if (!$request instanceof ConsoleRequest) {
+        if (!$request instanceof ConsoleRequest)
+        {
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
         /**
          * Run the Phinx sync
          */
-        return $this->getPhinxManager()->sync($request->getParam('migrations_dir'));
+        return $this->getPhinxManager()->sync();
+    }
+    
+    /**
+     * Migrate group of databaseses, by current enviremont
+     *
+     * @return String
+     * @throws \RuntimeException
+     */
+    public function groupmigrateAction()
+    {
+        $request = $this->getRequest();
+        if (!$request instanceof ConsoleRequest)
+        {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+        /**
+         * Run the Phinx groupmigrate
+         */
+        return $this->getPhinxManager()->groupmigrate($request->getParam('serverip'));
     }
 
     /**
@@ -76,7 +97,8 @@ class ConsoleController extends AbstractActionController
          * Enforce valid console request
          */
         $request = $this->getRequest();
-        if (!$request instanceof ConsoleRequest) {
+        if (!$request instanceof ConsoleRequest)
+        {
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
@@ -95,7 +117,8 @@ class ConsoleController extends AbstractActionController
          * Enforce valid console request
          */
         $request = $this->getRequest();
-        if (!$request instanceof ConsoleRequest) {
+        if (!$request instanceof ConsoleRequest)
+        {
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
@@ -112,10 +135,13 @@ class ConsoleController extends AbstractActionController
      */
     protected function getPhinxManager()
     {
-        if (!$this->manager) {
+        if (!$this->manager)
+        {
             $this->manager = new PhinxManager(
                 $this->getServiceLocator()->get('console'),
-                $this->getServiceLocator()->get('config')
+                $this->getServiceLocator()->get('config'),
+                $this->getServiceLocator()->get('prod-db-clients'),
+                $this->getServiceLocator()->get('globaldb')
             );
         }
 
